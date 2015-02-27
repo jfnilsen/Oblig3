@@ -9,7 +9,8 @@ import cards.EmployeeCard;
 import cards.GuestCard;
 
 public class CardTests {
-	
+	//--------------------Employee tests--------------------
+			//----------General card tests----------
 	@Test
 	public void cardConstructor_works_Employee(){
 		 Card card = new EmployeeCard("Per", "Robert", "1234");
@@ -37,6 +38,7 @@ public class CardTests {
 		assertEquals("Name: " + "Per Robert" + "\nPincode: " 
 	+ "1234" + "\nCardNumber: "+ card.getCardNumber() + "\nCardsuspended: " + "false", card.toString());
 	}
+			//----------Employee card specific tests----------
 	@Test
 	public void checkPin_works_at1500_Employee(){
 		EmployeeCard card = new EmployeeCard("Per", "Pak", "1234");
@@ -63,6 +65,9 @@ public class CardTests {
 		EmployeeCard card = new EmployeeCard("Per", "Pak", "2222");
 		assertFalse(card.setTimeCheckPin("1111",18, Calendar.MONDAY));
 	}
+	
+	//--------------------Guest tests--------------------
+			//----------General card tests----------
 	@Test
 	public void cardConstructor_works_Guest() {
 		Card card = new GuestCard("Tove", "Johan");
@@ -70,6 +75,27 @@ public class CardTests {
 		GuestCard card2 = new GuestCard("Tove", "Johan");
 		assertNotNull(card2);
 	}
+	@Test
+	public void getName_works_Guest(){
+		Card card = new GuestCard("Per", "Robert");
+		assertEquals("Per Robert", card.getName());
+		Card card2 = new GuestCard("Per", "Robert");
+		assertEquals("Per Robert", card2.getName());
+	}
+	@Test
+	public void isSuspended_returnsCorrect_Guest() {
+		Card card = new GuestCard("Per", "Robert");
+		assertFalse(card.isSuspended());
+		card.suspend();
+		assertTrue(card.isSuspended());
+	}
+	@Test
+	public void toString_returnsCorrect_Guest() {
+		Card card = new GuestCard("Per", "Robert");
+		assertEquals("Name: " + "Per Robert" + "\nPincode: " 
+				+ "9999" + "\nCardNumber: "+ card.getCardNumber() + "\nCardsuspended: " + "false", card.toString());
+	}
+			//----------Guest card specific tests----------
 	@Test
 	public void checkPin_works_Guest_RightPin() {
 		Card card = new GuestCard("Tove", "Johan");
@@ -84,26 +110,6 @@ public class CardTests {
 	public void checkPin_works_Guest_AddOneWeek() {
 		GuestCard card = new GuestCard("Tove", "Johan");
 		assertFalse(card.setTimeCheckPin(1, "9999"));
-	}
-	@Test
-	public void getName_works_Guest(){
-		 Card card = new GuestCard("Per", "Robert");
-		 assertEquals("Per Robert", card.getName());
-		 Card card2 = new GuestCard("Per", "Robert");
-		 assertEquals("Per Robert", card2.getName());
-	}
-	@Test
-	public void isSuspended_returnsCorrect_Guest() {
-		Card card = new GuestCard("Per", "Robert");
-		assertFalse(card.isSuspended());
-		card.suspend();
-		assertTrue(card.isSuspended());
-	}
-	@Test
-	public void toString_returnsCorrect_Guest() {
-		Card card = new GuestCard("Per", "Robert");
-		assertEquals("Name: " + "Per Robert" + "\nPincode: " 
-	+ "9999" + "\nCardNumber: "+ card.getCardNumber() + "\nCardsuspended: " + "false", card.toString());
 	}
 	
 }

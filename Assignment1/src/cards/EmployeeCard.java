@@ -1,9 +1,11 @@
 package cards;
+import interfaces.Permanent;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class EmployeeCard extends Card {
+public class EmployeeCard extends Card implements Permanent {
 	Calendar dateCreated;
 	Calendar timeOfCardCheck;
 
@@ -36,6 +38,49 @@ public class EmployeeCard extends Card {
 				timeOfCardCheck.get(Calendar.HOUR_OF_DAY) >= 7 &&
 				timeOfCardCheck.get(Calendar.HOUR_OF_DAY) < 17;
 	}
+	@Override
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+		
+	}
+
+	@Override
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@Override
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+		
+	}
+
+	@Override
+	public String getLastName() {
+		return lastName;
+	}
+
+	@Override
+	public void setFullName(String fullName) {
+		String[] nameParts = fullName.split(" ");
+		this.firstName = nameParts[0];
+		this.lastName = nameParts[1];
+	}
+
+	@Override
+	public String getFullName() {
+		return firstName + " " + lastName;
+		
+	}
+	@Override
+	public double calculateCredit() {
+		return 0;
+	}
+
+	@Override
+	public double calculateBonus() {
+		return 0;
+	}
 
 	//methods for testing only
 	public boolean setTimeCheckPin(String pin, int time, final int dayOfWeek){
@@ -54,5 +99,6 @@ public class EmployeeCard extends Card {
 		}
 
 	}
+
 
 }
