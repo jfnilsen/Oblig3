@@ -3,13 +3,20 @@ package tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+
 import cards.Card;
 import cards.EmployeeCard;
 import cards.GuestCard;
 
 public class CardTests {
+	//------------------------------------------------------
 	//--------------------Employee tests--------------------
+	//------------------------------------------------------
+	
 			//----------General card tests----------
 	@Test
 	public void cardConstructor_works_Employee(){
@@ -35,8 +42,8 @@ public class CardTests {
 	@Test
 	public void toString_returnsCorrect_Employee() {
 		Card card = new EmployeeCard("Per", "Robert", "1234");
-		assertEquals("Name: " + "Per Robert" + "\nPincode: " 
-	+ "1234" + "\nCardNumber: "+ card.getCardNumber() + "\nCardsuspended: " + "false", card.toString());
+		assertEquals("Name: " + "Per Robert" + " Pincode: " 
+	+ "1234" + " CardNumber: "+ card.getCardNumber() + " Cardsuspended: " + "false\n", card.toString());
 	}
 			//----------Employee card specific tests----------
 	@Test
@@ -65,8 +72,29 @@ public class CardTests {
 		EmployeeCard card = new EmployeeCard("Per", "Pak", "2222");
 		assertFalse(card.setTimeCheckPin("1111",18, Calendar.MONDAY));
 	}
+	@Test
+	public void setFirstName_works_Employee() {
+		EmployeeCard card = new EmployeeCard("Per", "Pak", "2222");
+		card.setFirstName("Pål");
+		assertEquals("Pål", card.getFirstName());
+	}
+	@Test
+	public void setLastName_works_Employee() {
+		EmployeeCard card = new EmployeeCard("Per", "Pak", "2222");
+		card.setLastName("Knutsen");
+		assertEquals("Knutsen", card.getLastName());
+	}
+	@Test
+	public void setFullName_works_Employee() {
+		EmployeeCard card = new EmployeeCard("Per", "Pak", "2222");
+		card.setFullName("Knut Knutsen");
+		assertEquals("Knut Knutsen", card.getFullName());
+	}
 	
+	//---------------------------------------------------
 	//--------------------Guest tests--------------------
+	//---------------------------------------------------
+	
 			//----------General card tests----------
 	@Test
 	public void cardConstructor_works_Guest() {
@@ -92,8 +120,8 @@ public class CardTests {
 	@Test
 	public void toString_returnsCorrect_Guest() {
 		Card card = new GuestCard("Per", "Robert");
-		assertEquals("Name: " + "Per Robert" + "\nPincode: " 
-				+ "9999" + "\nCardNumber: "+ card.getCardNumber() + "\nCardsuspended: " + "false", card.toString());
+		assertEquals("Name: " + "Per Robert" + " Pincode: " 
+				+ "9999" + " CardNumber: "+ card.getCardNumber() + " Cardsuspended: " + "false\n", card.toString());
 	}
 			//----------Guest card specific tests----------
 	@Test
@@ -110,6 +138,45 @@ public class CardTests {
 	public void checkPin_works_Guest_AddOneWeek() {
 		GuestCard card = new GuestCard("Tove", "Johan");
 		assertFalse(card.setTimeCheckPin(1, "9999"));
+	}
+	//---------------------------------------------------------
+	//--------------------Compare and Clone--------------------
+	//---------------------------------------------------------
+	
+	@Test
+	public void sortingTest_using_CompareTo() {
+		ArrayList<Card> cardList = new ArrayList<>();
+		Card card1 = new EmployeeCard("Abert", "Askeladd", "1234");
+		Card card2 = new EmployeeCard("Bcert", "Askeladd", "1234");
+		Card card3 = new GuestCard("Bbert", "Askeladd");
+		Card card4 = new EmployeeCard("Abert", "Baskeladd", "1234");
+		Card card5 = new GuestCard("Abert", "Basskeladd");
+		cardList.add(card1);
+		cardList.add(card2);
+		cardList.add(card3);
+		cardList.add(card4);
+		cardList.add(card5);
+		
+		Collections.sort(cardList);
+		
+		for(int i = 1; i < cardList.size(); i++){
+			assertTrue(cardList.get(i-1).compareTo(cardList.get(i)) < 0);
+		}
+	}
+	@Test
+	public void cloneTest() {
+		Card card1 = new EmployeeCard("Abert", "Askeladd", "1234");
+		Card card2;
+		try {
+			card2 = (Card) card1.clone();
+			assertEquals(card1.toString(), card2.toString());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 	}
 	
 }

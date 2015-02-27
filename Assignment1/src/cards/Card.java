@@ -28,8 +28,8 @@ public abstract class Card implements Comparable<Card>, Cloneable {
 	
 	@Override
 	public String toString() {
-		String returnString = "Name: " + getName() + "\nPincode: " 
-	+ pinCode + "\nCardNumber: "+ cardNumber + "\nCardsuspended: " + cardSuspended ;
+		String returnString = "Name: " + getName() + " Pincode: " 
+	+ pinCode + " CardNumber: "+ cardNumber + " Cardsuspended: " + cardSuspended+"\n" ;
 		return returnString;
 		
 	}
