@@ -1,20 +1,20 @@
 
 public abstract class Card {
-	private String firstName;
-	private String lastName;
-	private String pinCode;
+	protected String firstName;
+	protected String lastName;
+	protected String pinCode;
 	private int accessCode;
-	static int cardsCreated;
-	private int cardNumber;
-	private boolean cardSuspended;
+	protected static int cardsCreated;
+	protected int cardNumber;
+	protected boolean cardSuspended;
 	
 	public Card(String firstName, String lastName, String pinCode){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.pinCode = pinCode;
+		cardSuspended = false;
 		cardsCreated++; 
 		cardNumber = cardsCreated;
-		cardSuspended = false;
 	}
 	public String getName() {
 		return firstName + " " + lastName;
@@ -22,6 +22,7 @@ public abstract class Card {
 	}
 	public boolean getSuspended() {
 		return cardSuspended;
+		
 	}
 	
 	@Override
