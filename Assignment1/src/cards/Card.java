@@ -1,10 +1,9 @@
 package cards;
 
-public abstract class Card {
+public abstract class Card implements Comparable<Card>, Cloneable {
 	protected String firstName;
 	protected String lastName;
 	protected String pinCode;
-	private int accessCode;
 	protected static int cardsCreated;
 	protected int cardNumber;
 	protected boolean cardSuspended;
@@ -28,8 +27,8 @@ public abstract class Card {
 	
 	@Override
 	public String toString() {
-		String returnString = "Name: " + getName() + "\nPincode: " 
-	+ pinCode + "\nCardNumber: "+ cardNumber + "\nCardsuspended: " + cardSuspended ;
+		String returnString = "Name: " + getName() + " Pincode: " 
+	+ pinCode + " CardNumber: "+ cardNumber + " Cardsuspended: " + cardSuspended+"\n" ;
 		return returnString;
 		
 	}
@@ -42,4 +41,17 @@ public abstract class Card {
 	
 	public abstract boolean checkPin(String pin);
 	
+	@Override
+	public int compareTo(Card card){
+		if(this.lastName != card.lastName){
+			return this.lastName.compareTo(card.lastName);
+		}else{
+			return this.firstName.compareTo(card.firstName);
+		}
+	}
+	@Override
+	public Object clone() throws CloneNotSupportedException{
+		return super.clone();
+		
+	}
 }
