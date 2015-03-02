@@ -57,9 +57,20 @@ public class CardTests {
 		assertTrue(card2.setTimeCheckPin("1111", 6, Calendar.MONDAY));
 	}
 	@Test
+	public void checkPin_works_at0600_Employee_WrongPin(){
+		EmployeeCard card2 = new EmployeeCard("Per", "Pak", "1111");
+		assertFalse(card2.setTimeCheckPin("1234", 6, Calendar.MONDAY));
+	}
+	@Test
 	public void checkPin_works_at0700_Employee(){
 		EmployeeCard card2 = new EmployeeCard("Per", "Pak", "1111");
 		assertTrue(card2.setTimeCheckPin("1111", 7, Calendar.MONDAY));
+		assertTrue(card2.setTimeCheckPin("1234", 7, Calendar.MONDAY));
+	}
+	@Test
+	public void checkPin_works_at0700_Employee_NoPin(){
+		EmployeeCard card2 = new EmployeeCard("Per", "Pak", "1111");
+		assertTrue(card2.setTimeCheckPin("", 7, Calendar.MONDAY));
 	}
 	
 	@Test
@@ -107,8 +118,8 @@ public class CardTests {
 	public void getName_works_Guest(){
 		Card card = new GuestCard("Per", "Robert");
 		assertEquals("Per Robert", card.getName());
-		Card card2 = new GuestCard("Per", "Robert");
-		assertEquals("Per Robert", card2.getName());
+		Card card2 = new GuestCard("Peer", "Robert");
+		assertEquals("Peer Robert", card2.getName());
 	}
 	@Test
 	public void isSuspended_returnsCorrect_Guest() {
@@ -146,21 +157,23 @@ public class CardTests {
 	@Test
 	public void sortingTest_using_CompareTo() {
 		ArrayList<Card> cardList = new ArrayList<>();
-		Card card1 = new EmployeeCard("Abert", "Askeladd", "1234");
-		Card card2 = new EmployeeCard("Bcert", "Askeladd", "1234");
-		Card card3 = new GuestCard("Bbert", "Askeladd");
-		Card card4 = new EmployeeCard("Abert", "Baskeladd", "1234");
-		Card card5 = new GuestCard("Abert", "Basskeladd");
+		Card card1 = new GuestCard("Bbert", "Askeladd");
+		Card card2 = new GuestCard("Abert", "Basskeladd");
+		Card card3 = new EmployeeCard("Abert", "Askeladd", "1234");
+		Card card4 = new EmployeeCard("Bcert", "Askeladd", "1234");
+		Card card5 = new EmployeeCard("Abert", "Baskeladd", "1234");
+		Card card6 = new GuestCard("Abert", "Basskeladd");
 		cardList.add(card1);
 		cardList.add(card2);
 		cardList.add(card3);
 		cardList.add(card4);
 		cardList.add(card5);
+		cardList.add(card6);
 		
 		Collections.sort(cardList);
 		
 		for(int i = 1; i < cardList.size(); i++){
-			assertTrue(cardList.get(i-1).compareTo(cardList.get(i)) < 0);
+			assertTrue(cardList.get(i-1).compareTo(cardList.get(i)) <= 0);
 		}
 	}
 	@Test
@@ -170,12 +183,12 @@ public class CardTests {
 		try {
 			card2 = (Card) card1.clone();
 			assertEquals(card1.toString(), card2.toString());
+			assertEquals("Abert", ((EmployeeCard)card2).getFirstName());
+			assertEquals("Askeladd", ((EmployeeCard)card2).getLastName());
+			assertEquals("Abert Askeladd", ((EmployeeCard)card2).getFullName());
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 		
 	}
 	

@@ -4,7 +4,6 @@ public abstract class Card implements Comparable<Card>, Cloneable {
 	protected String firstName;
 	protected String lastName;
 	protected String pinCode;
-	private int accessCode;
 	protected static int cardsCreated;
 	protected int cardNumber;
 	protected boolean cardSuspended;

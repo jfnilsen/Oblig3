@@ -8,7 +8,11 @@ import java.util.GregorianCalendar;
 public class EmployeeCard extends Card implements Permanent {
 	Calendar dateCreated;
 	Calendar timeOfCardCheck;
-
+	//assignment does not specify what these should be, initialized them to 0
+	private double bonusConstant = 0;
+	private double hourlyWage = 0;
+	private double creditConstant = 0;
+	
 	public EmployeeCard(String firstName, String lastName, String pinCode) {
 		super(firstName, lastName, pinCode);
 		dateCreated = new GregorianCalendar();
@@ -16,21 +20,17 @@ public class EmployeeCard extends Card implements Permanent {
 
 	@Override
 	public boolean checkPin(String pin) {
-		if(isSuspended() == false){
+		if(isSuspended() == true){
 			timeOfCardCheck = new GregorianCalendar();
 
 			if(isWorkTime(timeOfCardCheck)){
 				return true;
 			}else {
-				return checkPinCode(pin);
+				return pin.contentEquals(pinCode);
 			}
 		}else{
 			return false; 
 		}
-	}
-	private boolean checkPinCode(String pin){
-		return (pin.contentEquals(pinCode));
-
 	}
 	private boolean isWorkTime(Calendar timeOfCardCheck){
 		return (timeOfCardCheck.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && 
@@ -74,15 +74,17 @@ public class EmployeeCard extends Card implements Permanent {
 	}
 	@Override
 	public double calculateCredit() {
-		return 0;
+		return hourlyWage * creditConstant;
 	}
 
 	@Override
 	public double calculateBonus() {
-		return 0;
+		Calendar timeOfCalculation = new GregorianCalendar();
+		double years = (timeOfCalculation.getTimeInMillis() - dateCreated.getTimeInMillis())/(1000*60*60*24*365.25);
+		return (int)years * bonusConstant;
 	}
 
-	//methods for testing only
+	//method for testing only, identical to checkPin() except for a way to set time to desired
 	public boolean setTimeCheckPin(String pin, int time, final int dayOfWeek){
 		if(isSuspended() == false){
 			timeOfCardCheck = new GregorianCalendar();
@@ -92,7 +94,7 @@ public class EmployeeCard extends Card implements Permanent {
 			if(isWorkTime(timeOfCardCheck)){
 				return true;
 			}else{
-				return checkPinCode(pin);
+				return pin.contentEquals(pinCode);
 			}
 		}else{
 			return false; 
