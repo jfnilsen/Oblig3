@@ -170,7 +170,6 @@ public class CardTests {
 		cardList.add(card5);
 		cardList.add(card6);
 		
-		
 		Collections.sort(cardList);
 		
 		for(int i = 1; i < cardList.size(); i++){
